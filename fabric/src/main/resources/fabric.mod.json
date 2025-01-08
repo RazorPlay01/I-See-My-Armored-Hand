@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "ismah",
+  "version": "${version}",
+  "name": "I See My Armored Hand",
+  "description": "Tired of not seeing your equipped armor in first person? 'I See My Armored Hand' adds a visual of your arm armor when looking down, providing increased immersion and a better sense of your character's protection.",
+  "authors": [
+    {
+      "name": "RazorPlay01",
+      "contact": {
+        "homepage": "https://x.com/RazorPlay01",
+        "sources": "https://github.com/RazorPlay01"
+      }
+    }
+  ],
+  "contact": {
+    "issues": "https://github.com/RazorPlay01/I-See-My-Armored-Hand/issues",
+    "sources": "https://github.com/RazorPlay01/I-See-My-Armored-Hand"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.github.razorplay01.ismah.fabric.ISMAHFabric"
+    ],
+    "client": [
+      "com.github.razorplay01.ismah.fabric.ISMAHFabric"
+    ]
+  },
+  "mixins": [
+    "ismah.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": ">=1.21 <=1.21.1",
+    "java": ">=21"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
