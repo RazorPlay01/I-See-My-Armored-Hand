@@ -15,10 +15,10 @@
 
 ## ⚙️ Compatibilidad
 
-- **Minecraft**: Only compatible with **1.21** y **1.21.1**. (I plan to create a minecraft 1.20.+ compatible version soon.)
+- **Minecraft**: Only compatible with **1.20**, **1.20.1**, **1.21**, **1.21.1**.
 - **Fabric**: [✅].
 - **NeoForge**: [✅].
-- **Forge**: [⚠️] It is currently not available for forge due to its poor stability in these versions..
+- **Forge**: [✅].
 
 ---
 
