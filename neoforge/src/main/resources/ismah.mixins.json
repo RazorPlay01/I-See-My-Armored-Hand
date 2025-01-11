@@ -1,7 +1,7 @@
 {
   "required": true,
-  "package": "com.github.razorplay01.ismah.fabric.mixin",
-  "plugin": "com.github.razorplay01.ismah.fabric.mixin.MixinPlugin",
+  "package": "com.github.razorplay01.ismah.neoforge.mixin",
+  "plugin": "com.github.razorplay01.ismah.neoforge.mixin.MixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [

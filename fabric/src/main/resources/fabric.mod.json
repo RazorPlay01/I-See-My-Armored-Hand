@@ -37,6 +37,6 @@
     "java": ">=21"
   },
   "suggests": {
-    "another-mod": "*"
+    "playeranimator": "*"
   }
 }

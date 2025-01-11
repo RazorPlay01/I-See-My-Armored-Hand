@@ -28,5 +28,12 @@ versionRange = "[1.21,)"
 ordering = "NONE"
 side = "CLIENT"
 
+[[dependencies.ismah]]
+modId = "playeranimator"
+type = "optional"
+versionRange = "[2.0.0,)"
+ordering = "AFTER"
+side = "CLIENT"
+
 [[mixins]]
 config = "ismah.mixins.json"
