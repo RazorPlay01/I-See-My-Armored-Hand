@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "com.github.razorplay01.ismah.forge.mixin",
+  "plugin": "com.github.razorplay01.ismah.forge.mixin.MixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "HumanoidArmorLayerMixin",
+    "ItemInHandRendererMixin",
+    "LivingEntityRendererMixin"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

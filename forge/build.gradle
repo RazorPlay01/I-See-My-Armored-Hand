@@ -32,6 +32,7 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:$rootProject.forge_version"
+    modImplementation("dev.kosmx.player-anim:player-animation-lib-forge:${project.player_anim}")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')

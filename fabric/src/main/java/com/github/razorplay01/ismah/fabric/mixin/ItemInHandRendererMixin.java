@@ -1,4 +1,4 @@
-package com.github.razorplay01.ismah.mixin;
+package com.github.razorplay01.ismah.fabric.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
