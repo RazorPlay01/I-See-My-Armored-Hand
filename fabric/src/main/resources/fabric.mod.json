@@ -1,0 +1,45 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "issues": "${issues}",
+        "sources": "${sources}"
+    },
+    "license": "${license}",
+    "icon": "${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.github.razorplay01.ismah.ISMAHFabric"
+        ],
+        "client": [
+            "com.github.razorplay01.ismah.ISMAHFabric"
+        ],
+        "modmenu": [
+            "com.github.razorplay01.ismah.config.ModMenuConfig"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json",
+        "${mod_id}.fabric.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}"
+    },
+    "suggests": {
+        "player-animator": "*",
+        "geckolib": "*",
+        "azurelib": "*",
+        "azurelibarmor": "*"
+    }
+}
+  
