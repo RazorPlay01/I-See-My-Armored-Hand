@@ -53,9 +53,16 @@ public class ItemInHandRendererMixin {
         ItemStack chestplate = player.getInventory().getArmor(2);
         if (chestplate.isEmpty()) return;
 
-        Equippable equippable = chestplate.get(DataComponents.EQUIPPABLE);
-        if (chestplate.getItem() instanceof ArmorItem && equippable != null && equippable.model().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
-            renderEquipment(poseStack, vertexConsumers, player, arm, light, chestplate);
+        CustomArmorRenderer customRenderer = ArmorRendererRegistry.getRenderer(chestplate);
+        ModelPart armorArm = setupArmorModel(player, arm);
+
+        if (customRenderer != null) {
+            customRenderer.render(poseStack, vertexConsumers, armorArm, light, chestplate, arm);
+        } else {
+            Equippable equippable = chestplate.get(DataComponents.EQUIPPABLE);
+            if (chestplate.getItem() instanceof ArmorItem && equippable != null && equippable.model().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
+                renderEquipment(poseStack, vertexConsumers, player, arm, light, chestplate);
+            }
         }
     }
 
