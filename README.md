@@ -20,7 +20,7 @@
 
 ## ⚙️ Compatibilidad
 
-- **Minecraft**: Only compatible with **1.20**, **1.20.1**, **1.21**, **1.21.1**.
+- **Minecraft**: Only compatible with **1.20**, **1.20.1**, **1.21+**.
 - **Fabric**: [✅].
 - **NeoForge**: [✅].
 - **Forge**: [✅].
