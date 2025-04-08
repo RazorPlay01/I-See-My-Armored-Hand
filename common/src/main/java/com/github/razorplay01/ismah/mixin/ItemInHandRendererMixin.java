@@ -19,7 +19,10 @@ import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.EquipmentClientInfo;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -27,9 +30,10 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.item.equipment.EquipmentModel;
+import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -60,7 +64,7 @@ public class ItemInHandRendererMixin {
             customRenderer.render(poseStack, vertexConsumers, armorArm, light, chestplate, arm);
         } else {
             Equippable equippable = chestplate.get(DataComponents.EQUIPPABLE);
-            if (chestplate.getItem() instanceof ArmorItem && equippable != null && equippable.model().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
+            if (chestplate.getItem() instanceof ArmorItem && equippable != null && equippable.assetId().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
                 renderEquipment(poseStack, vertexConsumers, player, arm, light, chestplate);
             }
         }
@@ -94,17 +98,20 @@ public class ItemInHandRendererMixin {
 
     @Unique
     private void renderEquipmentLayers(PoseStack poseStack, MultiBufferSource vertexConsumers, ItemStack chestplate, Equippable equippable, ModelPart armorArm, int light) {
-        ResourceLocation modelId = equippable.model().orElseThrow();
-        List<EquipmentModel.Layer> layers = Minecraft.getInstance().getEquipmentModels().get(modelId).getLayers(EquipmentModel.LayerType.HUMANOID);
+        ResourceKey<EquipmentAsset> assetId = equippable.assetId().orElseThrow();
+        List<EquipmentClientInfo.Layer> layers = ((EntityRenderDispatcherAccesor) Minecraft.getInstance().getEntityRenderDispatcher())
+                .getEquipmentAssetManager()
+                .get(assetId)
+                .getLayers(EquipmentClientInfo.LayerType.HUMANOID);
 
         if (!layers.isEmpty()) {
             int dyeColor = chestplate.is(ItemTags.DYEABLE) ? DyedItemColor.getOrDefault(chestplate, 0) : 0;
             boolean hasFoil = chestplate.hasFoil();
 
-            for (EquipmentModel.Layer layer : layers) {
+            for (EquipmentClientInfo.Layer layer : layers) {
                 int color = getColorForLayer(layer, dyeColor);
                 if (color != 0) {
-                    ResourceLocation texture = layer.getTextureLocation(EquipmentModel.LayerType.HUMANOID);
+                    ResourceLocation texture = layer.getTextureLocation(EquipmentClientInfo.LayerType.HUMANOID);
                     VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(texture), hasFoil);
                     armorArm.render(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, color);
                     hasFoil = false;
@@ -114,7 +121,7 @@ public class ItemInHandRendererMixin {
     }
 
     @Unique
-    private int getColorForLayer(EquipmentModel.Layer layer, int dyeColor) {
+    private int getColorForLayer(EquipmentClientInfo.Layer layer, int dyeColor) {
         var dyeable = layer.dyeable();
         if (dyeable.isPresent()) {
             int defaultColor = dyeable.get().colorWhenUndyed().map(color -> 0xFF000000 | color).orElse(0);
@@ -127,12 +134,22 @@ public class ItemInHandRendererMixin {
     private void renderTrim(PoseStack poseStack, MultiBufferSource vertexConsumers, ItemStack chestplate, Equippable equippable, ModelPart armorArm, int light) {
         ArmorTrim trim = chestplate.get(DataComponents.TRIM);
         if (trim != null) {
-            ResourceLocation modelId = equippable.model().orElseThrow();
-            ResourceLocation trimTextureId = trim.getTexture(EquipmentModel.LayerType.HUMANOID, modelId);
+            ResourceKey<EquipmentAsset> assetId = equippable.assetId().orElseThrow();
+
+            ResourceLocation patternAssetId = trim.pattern().value().assetId();
+            String materialSuffix = getColorPaletteSuffix(trim.material(), assetId);
+            ResourceLocation trimTextureId = patternAssetId.withPath(p -> "trims/entity/" + EquipmentClientInfo.LayerType.HUMANOID.getSerializedName() + "/" + p + "_" + materialSuffix);
+
             TextureAtlasSprite trimSprite = Minecraft.getInstance().getTextureAtlas(Sheets.ARMOR_TRIMS_SHEET).apply(trimTextureId);
             VertexConsumer trimConsumer = trimSprite.wrap(vertexConsumers.getBuffer(Sheets.armorTrimsSheet(trim.pattern().value().decal())));
             armorArm.render(poseStack, trimConsumer, light, OverlayTexture.NO_OVERLAY);
         }
+    }
+
+    @Unique
+    private static String getColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ResourceKey<EquipmentAsset> equipmentAsset) {
+        String override = trimMaterial.value().overrideArmorAssets().get(equipmentAsset);
+        return override != null ? override : trimMaterial.value().assetName();
     }
 
     @Unique

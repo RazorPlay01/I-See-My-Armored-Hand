@@ -23,7 +23,7 @@ neoForge {
             client()
         }
         data {
-            data()
+            clientData()
         }
         server {
             server()
@@ -34,32 +34,6 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
-}
-
-repositories {
-    maven {
-        name = 'GeckoLib'
-        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-        content {
-            includeGroup("software.bernie.geckolib")
-        }
-    }
-    maven {
-        name "KosmX's maven"
-        url 'https://maven.kosmx.dev/'
-    }
-    maven { url 'https://maven.azuredoom.com/mods' }
-}
-
-dependencies {
-    //implementation "dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}"
-    //implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    //implementation "mod.azure.azurelibarmor:azurelibarmor-neo-${minecraft_version}:${azure_lib_armor_version}"
-    //implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azure_lib_version}"
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs << "-Xlint:-deprecation"
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }

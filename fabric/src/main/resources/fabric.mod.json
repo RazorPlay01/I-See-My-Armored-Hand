@@ -20,9 +20,6 @@
         ],
         "client": [
             "com.github.razorplay01.ismah.ISMAHFabric"
-        ],
-        "modmenu": [
-            "com.github.razorplay01.ismah.config.ModMenuConfig"
         ]
     },
     "mixins": [
