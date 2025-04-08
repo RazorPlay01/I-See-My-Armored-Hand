@@ -52,10 +52,10 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}"
-    implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
-    implementation "mod.azure.azurelibarmor:azurelibarmor-neo-${minecraft_version}:${azure_lib_armor_version}"
-    implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azure_lib_version}"
+    //implementation "dev.kosmx.player-anim:player-animation-lib-forge:${player_anim_version}"
+    //implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+    //implementation "mod.azure.azurelibarmor:azurelibarmor-neo-${minecraft_version}:${azure_lib_armor_version}"
+    //implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azure_lib_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {

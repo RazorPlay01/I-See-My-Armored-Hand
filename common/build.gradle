@@ -37,10 +37,10 @@ dependencies {
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
-    compileOnly "dev.kosmx.player-anim:player-animation-lib:${player_anim_version}"
-    compileOnly "software.bernie.geckolib:geckolib-common-${minecraft_version}:${geckolib_version}"
-    compileOnly "mod.azure.azurelibarmor:azurelibarmor-common-${minecraft_version}:${azure_lib_armor_version}"
-    compileOnly "mod.azure.azurelib:azurelib-common-${minecraft_version}:${azure_lib_version}"
+    //compileOnly "dev.kosmx.player-anim:player-animation-lib:${player_anim_version}"
+    //compileOnly "software.bernie.geckolib:geckolib-common-${minecraft_version}:${geckolib_version}"
+    //compileOnly "mod.azure.azurelibarmor:azurelibarmor-common-${minecraft_version}:${azure_lib_armor_version}"
+    //compileOnly "mod.azure.azurelib:azurelib-common-${minecraft_version}:${azure_lib_version}"
 }
 
 configurations {

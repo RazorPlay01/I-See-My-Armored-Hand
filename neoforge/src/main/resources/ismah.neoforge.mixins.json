@@ -2,12 +2,9 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.github.razorplay01.ismah.mixin",
-  "plugin": "com.github.razorplay01.ismah.mixin.MixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [
-    "HumanoidArmorLayerMixin",
-    "LivingEntityRendererMixin"
   ],
   "server": [],
   "injectors": {
