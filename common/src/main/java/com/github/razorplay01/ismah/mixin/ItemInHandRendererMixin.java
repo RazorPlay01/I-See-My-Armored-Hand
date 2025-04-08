@@ -27,12 +27,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.equipment.trim.ArmorTrim;
+import net.minecraft.world.item.equipment.trim.MaterialAssetGroup;
 import net.minecraft.world.item.equipment.trim.TrimMaterial;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -42,19 +42,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-import static com.github.razorplay01.ismah.ISMAH.MINECRAFT_CLIENT;
-
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
     @Inject(method = "renderPlayerArm", at = @At("TAIL"))
     private void renderArmorLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, float f, float g, HumanoidArm humanoidArm, CallbackInfo ci) {
-        if (MINECRAFT_CLIENT.player == null || MINECRAFT_CLIENT.player.isInvisible()) return;
-        renderArmor(poseStack, multiBufferSource, MINECRAFT_CLIENT.player, humanoidArm, light);
+        LocalPlayer player = Minecraft.getInstance().player;
+        if (player == null || player.isInvisible()) return;
+        renderArmor(poseStack, multiBufferSource, player, humanoidArm, light);
     }
 
     @Unique
     private void renderArmor(PoseStack poseStack, MultiBufferSource vertexConsumers, LocalPlayer player, HumanoidArm arm, int light) {
-        ItemStack chestplate = player.getInventory().getArmor(2);
+        ItemStack chestplate = ((InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.CHEST);
         if (chestplate.isEmpty()) return;
 
         CustomArmorRenderer customRenderer = ArmorRendererRegistry.getRenderer(chestplate);
@@ -64,7 +63,7 @@ public class ItemInHandRendererMixin {
             customRenderer.render(poseStack, vertexConsumers, armorArm, light, chestplate, arm);
         } else {
             Equippable equippable = chestplate.get(DataComponents.EQUIPPABLE);
-            if (chestplate.getItem() instanceof ArmorItem && equippable != null && equippable.assetId().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
+            if (equippable != null && equippable.assetId().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
                 renderEquipment(poseStack, vertexConsumers, player, arm, light, chestplate);
             }
         }
@@ -81,7 +80,7 @@ public class ItemInHandRendererMixin {
 
     @Unique
     private ModelPart setupArmorModel(LocalPlayer player, HumanoidArm arm) {
-        PlayerRenderer playerRenderer = (PlayerRenderer) MINECRAFT_CLIENT.getEntityRenderDispatcher().getRenderer(player);
+        PlayerRenderer playerRenderer = (PlayerRenderer) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(player);
         PlayerModel playerModel = playerRenderer.getModel();
 
         boolean isSlim = ((PlayerModelAccessor) playerModel).isSlim();
@@ -148,8 +147,9 @@ public class ItemInHandRendererMixin {
 
     @Unique
     private static String getColorPaletteSuffix(Holder<TrimMaterial> trimMaterial, ResourceKey<EquipmentAsset> equipmentAsset) {
-        String override = trimMaterial.value().overrideArmorAssets().get(equipmentAsset);
-        return override != null ? override : trimMaterial.value().assetName();
+        MaterialAssetGroup assets = trimMaterial.value().assets();
+        MaterialAssetGroup.AssetInfo assetInfo = assets.assetId(equipmentAsset);
+        return assetInfo.suffix();
     }
 
     @Unique
