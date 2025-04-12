@@ -25,18 +25,12 @@ public class AzureLibCompat implements CustomArmorRenderer {
     @Override
     public void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<LivingEntity> playerModel) {
         AzArmorRenderer renderer = AzArmorRendererRegistry.getOrNull(stack);
-
-        renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
-                (HumanoidModel<LivingEntity>) renderer.rendererPipeline().armorModel(),
-                renderer.rendererPipeline().config().textureLocation(stack));
-
-        /* AzArmorRenderer renderer = AzArmorRendererRegistry.getOrNull(stack);
         renderer.prepForRender(Minecraft.getInstance().player, stack, EquipmentSlot.CHEST, playerModel);
 
         HumanoidModel<LivingEntity> armorModel = (HumanoidModel<LivingEntity>) renderer.rendererPipeline().armorModel();
         playerModel.copyPropertiesTo(armorModel);
 
         VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderType.armorCutoutNoCull(renderer.rendererPipeline().config().textureLocation(stack)));
-        armorModel.renderToBuffer(poseStack, vertexConsumer, light, arm == HumanoidArm.LEFT ? 1 : 0);*/
+        armorModel.renderToBuffer(poseStack, vertexConsumer, light, arm == HumanoidArm.LEFT ? 1 : 0);
     }
 }

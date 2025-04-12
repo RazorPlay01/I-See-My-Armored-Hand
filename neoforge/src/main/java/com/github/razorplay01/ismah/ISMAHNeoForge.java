@@ -29,22 +29,28 @@ public class ISMAHNeoForge {
             ArmorRendererRegistry.register(new AlchemistsArsenalCompat());
             ISMAH.LOGGER.info("Alchemist's Arsenal detected. Registering AlchemistsArsenalCompat.");
         }
+        if (isModLoaded("geckolib")) {
+            ArmorRendererRegistry.register(new GeckoLibCompat());
+            ISMAH.LOGGER.info("GeckoLib detected. Registering AzureArmorLibCompat.");
+        }
+        if (isModLoaded("azurelibarmor")) {
+            ArmorRendererRegistry.register(new AzureArmorLibCompat());
+            ISMAH.LOGGER.info("AzureLibArmor detected. Registering AzureArmorLibCompat.");
+        }
+        if (isModLoaded("azurelib")) {
+            ArmorRendererRegistry.register(new AzureLibCompat());
+            ISMAH.LOGGER.info("AzureLib detected. Registering AzureArmorLibCompat.");
+        }
         if (isModLoaded("playeranimator")) {
             if (isModLoaded("geckolib")) {
-                ArmorRendererRegistry.register(new GeckoLibCompat());
-                ISMAH.LOGGER.info("GeckoLib detected. Registering AzureArmorLibCompat.");
                 NeoForge.EVENT_BUS.register(GeckoArmorRenderHandler.class);
                 ISMAH.LOGGER.info("GeckoLib and PlayerAnimator detected. Registering GeckoArmorRenderHandler.");
             }
             if (isModLoaded("azurelibarmor")) {
-                ArmorRendererRegistry.register(new AzureArmorLibCompat());
-                ISMAH.LOGGER.info("AzureLibArmor detected. Registering AzureArmorLibCompat.");
                 NeoForge.EVENT_BUS.register(AzureArmorRenderHandler.class);
                 ISMAH.LOGGER.info("AzureLibArmor and PlayerAnimator detected. Registering AzureArmorRenderHandler.");
             }
             if (isModLoaded("azurelib")) {
-                ArmorRendererRegistry.register(new AzureLibCompat());
-                ISMAH.LOGGER.info("AzureLib detected. Registering AzureArmorLibCompat.");
                 NeoForge.EVENT_BUS.register(AzureLibArmorRenderHandler.class);
                 ISMAH.LOGGER.info("AzureLib and PlayerAnimator detected. Registering AzureLibArmorRenderHandler.");
             }
