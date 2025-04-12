@@ -80,6 +80,8 @@ dependencies {
     compileOnly "maven.modrinth:armor-of-the-ages:KPvup19z"
     compileOnly "curse.maven:roots-classic-295780:6022569"
     compileOnly "curse.maven:lendercataclysm-551586:6370063"
+    //compileOnly "curse.maven:hexerei-548599:6376510"
+    compileOnly "curse.maven:alchemists-arsenal-1098105:6080174"
 }
 
 tasks.withType(JavaCompile).configureEach {

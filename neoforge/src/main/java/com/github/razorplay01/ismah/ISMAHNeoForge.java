@@ -25,6 +25,10 @@ public class ISMAHNeoForge {
             ArmorRendererRegistry.register(new CataclysmCompat());
             ISMAH.LOGGER.info("Cataclysm detected. Registering CataclysmCompat.");
         }
+        if (isModLoaded("alkhars")) {
+            ArmorRendererRegistry.register(new AlchemistsArsenalCompat());
+            ISMAH.LOGGER.info("Alchemist's Arsenal detected. Registering AlchemistsArsenalCompat.");
+        }
         if (isModLoaded("playeranimator")) {
             if (isModLoaded("geckolib")) {
                 ArmorRendererRegistry.register(new GeckoLibCompat());
