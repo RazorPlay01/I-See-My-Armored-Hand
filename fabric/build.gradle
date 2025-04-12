@@ -18,6 +18,17 @@ repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
     maven { url 'https://maven.azuredoom.com/mods' }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 dependencies {
@@ -33,6 +44,8 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
     modImplementation "mod.azure.azurelibarmor:azurelibarmor-fabric-${minecraft_version}:${azure_lib_armor_version}"
     modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azure_lib_version}"
+
+    modCompileOnly "maven.modrinth:armor-of-the-ages:KDZUnlui"
 }
 
 loom {

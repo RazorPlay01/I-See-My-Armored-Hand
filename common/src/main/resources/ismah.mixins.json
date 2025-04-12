@@ -6,8 +6,9 @@
   "compatibilityLevel": "JAVA_18",
   "mixins": [],
   "client": [
-    "ItemInHandRendererMixin",
-    "PlayerModelAccessor"
+    "LivingEntityRendererAccessor",
+    "PlayerModelAccessor",
+    "PlayerRendererMixin"
   ],
   "server": [],
   "injectors": {

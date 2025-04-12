@@ -48,4 +48,3 @@ rootProject.name = 'ismah-1.21(.1)_multiloader'
 include('common')
 include('fabric')
 include('neoforge')
-include('forge')

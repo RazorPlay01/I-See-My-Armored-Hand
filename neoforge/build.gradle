@@ -49,6 +49,27 @@ repositories {
         url 'https://maven.kosmx.dev/'
     }
     maven { url 'https://maven.azuredoom.com/mods' }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -56,6 +77,9 @@ dependencies {
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
     implementation "mod.azure.azurelibarmor:azurelibarmor-neo-${minecraft_version}:${azure_lib_armor_version}"
     implementation "mod.azure.azurelib:azurelib-neo-${minecraft_version}:${azure_lib_version}"
+    compileOnly "maven.modrinth:armor-of-the-ages:KPvup19z"
+    compileOnly "curse.maven:roots-classic-295780:6022569"
+    compileOnly "curse.maven:lendercataclysm-551586:6370063"
 }
 
 tasks.withType(JavaCompile).configureEach {
