@@ -25,25 +25,25 @@ public class CataclysmCompat implements CustomArmorRenderer {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
         if (stack.getItem() instanceof Bone_Reptile_Armor) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new Bone_Reptile_Armor_Model(Minecraft.getInstance().getEntityModels().bakeLayer(CMModelLayers.BONE_REPTILE_ARMOR_MODEL)),
                     ResourceLocation.fromNamespaceAndPath("cataclysm", "textures/armor/bone_reptile_armor.png"));
         } else if (stack.getItem() instanceof Bloom_Stone_Pauldrons) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new Bloom_Stone_Pauldrons_Model(Minecraft.getInstance().getEntityModels().bakeLayer(CMModelLayers.BLOOM_STONE_PAULDRONS_MODEL)),
                     ResourceLocation.fromNamespaceAndPath("cataclysm", "textures/armor/bloom_stone_pauldrons.png"));
         } else if (stack.getItem() instanceof Cursium_Armor) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new Cursium_Armor_Model(Minecraft.getInstance().getEntityModels().bakeLayer(CMModelLayers.CURSIUM_ARMOR_MODEL)),
                     ResourceLocation.fromNamespaceAndPath("cataclysm", "textures/armor/cursium_armor.png"));
         } else if (stack.getItem() instanceof Ignitium_Armor) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new Ignitium_Armor_Model(Minecraft.getInstance().getEntityModels().bakeLayer(CMModelLayers.IGNITIUM_ARMOR_MODEL)),
                     ResourceLocation.fromNamespaceAndPath("cataclysm", "textures/armor/ignitium_armor.png"));
         } else if (stack.getItem() instanceof Ignitium_Elytra_ChestPlate) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new Ignitium_Elytra_chestplate_Model<>(Minecraft.getInstance().getEntityModels().bakeLayer(CMModelLayers.ELYTRA_ARMOR)),
                     ResourceLocation.fromNamespaceAndPath("cataclysm", "textures/armor/ignitium_elytra_chestplate.png"));
         }

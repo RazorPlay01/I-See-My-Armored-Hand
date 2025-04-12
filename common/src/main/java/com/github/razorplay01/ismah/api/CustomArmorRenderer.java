@@ -29,14 +29,14 @@ public interface CustomArmorRenderer {
      */
     boolean canRender(ItemStack stack);
 
-    void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel);
+    void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel);
 
-    default void renderArmor(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel, HumanoidModel<@NotNull LivingEntity> armorModel, ResourceLocation texture) {
+    default void renderArmor(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel, HumanoidModel<@NotNull LivingEntity> armorModel, ResourceLocation texture) {
         ModelPart armorArm = arm == HumanoidArm.LEFT ? armorModel.leftArm : armorModel.rightArm;
         ModelPart playerArm = arm == HumanoidArm.LEFT ? playerModel.leftArm : playerModel.rightArm;
         armorArm.copyFrom(playerArm);
 
-        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(vertexConsumers, RenderType.armorCutoutNoCull(texture), stack.hasFoil());
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(texture), stack.hasFoil());
         armorArm.render(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
     }
 }

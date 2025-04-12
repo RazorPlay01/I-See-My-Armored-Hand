@@ -19,8 +19,8 @@ public class AlchemistsArsenalCompat implements CustomArmorRenderer {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
-        renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
+        renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                 new TurtleMasterArmourModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(TurtleMasterArmourModel.LAYER_LOCATION)),
                 TurtleMasterArmourItem.TEXTURE_LOCATION_OUTER_LAYER);
     }

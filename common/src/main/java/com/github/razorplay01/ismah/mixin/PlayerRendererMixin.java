@@ -64,8 +64,6 @@ public class PlayerRendererMixin {
         if (customRenderer != null) {
             customRenderer.render(poseStack, buffer, combinedLight, armor, arm, playerModel);
         } else {
-            ArmorItem armorItem = (ArmorItem) armor.getItem();
-
             boolean isSlim = ((PlayerModelAccessor) playerModel).isSlim();
             HumanoidModel<LivingEntity> armorModel = new HumanoidModel<>(
                     HumanoidModel.createMesh(new CubeDeformation(isSlim ? 0.75f : 1.0f), 0.0f).getRoot().bake(64, 32)
@@ -76,6 +74,7 @@ public class PlayerRendererMixin {
             armorArm.copyFrom(playerArm);
             armorArm.xRot = 0.0F;
 
+            ArmorItem armorItem = (ArmorItem) armor.getItem();
             renderEquipmentLayers(poseStack, buffer, combinedLight, armor, armorItem, armorArm);
             renderArmorTrim(poseStack, buffer, combinedLight, armor, armorItem, armorArm);
             renderGlintIfNeeded(poseStack, buffer, combinedLight, armor, armorArm);

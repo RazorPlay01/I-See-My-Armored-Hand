@@ -81,6 +81,8 @@ dependencies {
     compileOnly "curse.maven:roots-classic-295780:6022569"
     compileOnly "curse.maven:lendercataclysm-551586:6370063"
     compileOnly "curse.maven:alchemists-arsenal-1098105:6080174"
+    runtimeOnly "curse.maven:ars-nouveau-401955:6407266"
+    runtimeOnly "curse.maven:curios-309927:6401872"
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -24,13 +24,13 @@ public class RootsClassicCompat implements CustomArmorRenderer {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull LivingEntity> playerModel) {
         if (stack.getItem() instanceof SylvanArmorItem) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new SylvanArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientHandler.SYLVAN_ARMOR), ArmorItem.Type.BODY),
                     ResourceLocation.fromNamespaceAndPath("rootsclassic", "textures/models/armor/sylvan.png"));
         } else if (stack.getItem() instanceof WildwoodArmorItem) {
-            renderArmor(poseStack, vertexConsumers, light, stack, arm, playerModel,
+            renderArmor(poseStack, bufferSource, light, stack, arm, playerModel,
                     new WildwoodArmorModel(Minecraft.getInstance().getEntityModels().bakeLayer(ClientHandler.WILDWOOD_ARMOR), ArmorItem.Type.BODY),
                     ResourceLocation.fromNamespaceAndPath("rootsclassic", "textures/models/armor/wildwood.png"));
         }

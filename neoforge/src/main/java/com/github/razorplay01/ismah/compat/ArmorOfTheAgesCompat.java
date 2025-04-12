@@ -22,7 +22,7 @@ public class ArmorOfTheAgesCompat implements CustomArmorRenderer {
     }
 
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource vertexConsumers, int light, ItemStack stack, HumanoidArm arm, HumanoidModel playerModel) {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel playerModel) {
         if (!(stack.getItem() instanceof HumanoidArmorItem armorItem)) {
             return;
         }
@@ -56,11 +56,11 @@ public class ArmorOfTheAgesCompat implements CustomArmorRenderer {
         model.rightLeg.visible = false;
         model.leftLeg.visible = false;
 
-        VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderType.armorCutoutNoCull(provider.getTexture(entity)));
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.armorCutoutNoCull(provider.getTexture(entity)));
         model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
 
         if (stack.hasFoil()) {
-            model.renderToBuffer(poseStack, vertexConsumers.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY);
+            model.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.armorEntityGlint()), light, OverlayTexture.NO_OVERLAY);
         }
 
         model.rightArm.visible = originalRightArmVisible;
