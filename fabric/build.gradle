@@ -46,6 +46,7 @@ dependencies {
     modImplementation "mod.azure.azurelib:azurelib-fabric-${minecraft_version}:${azure_lib_version}"
 
     modCompileOnly "maven.modrinth:armor-of-the-ages:KDZUnlui"
+    modRuntimeOnly "maven.modrinth:visible-offhand:El85dHMF"
 }
 
 loom {
