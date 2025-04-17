@@ -9,8 +9,9 @@
   ],
   "client": [
     "EntityRenderDispatcherAccesor",
-    "ItemInHandRendererMixin",
-    "PlayerModelAccessor"
+    "LivingEntityRendererAccessor",
+    "PlayerModelAccessor",
+    "PlayerRendererMixin"
   ],
   "server": [],
   "injectors": {

@@ -10,7 +10,6 @@ import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
@@ -42,29 +41,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin(ItemInHandRenderer.class)
-public class ItemInHandRendererMixin {
-    @Inject(method = "renderPlayerArm", at = @At("TAIL"))
-    private void renderArmorLayer(PoseStack poseStack, MultiBufferSource multiBufferSource, int light, float f, float g, HumanoidArm humanoidArm, CallbackInfo ci) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null || player.isInvisible()) return;
-        renderArmor(poseStack, multiBufferSource, player, humanoidArm, light);
+@Mixin(PlayerRenderer.class)
+public class PlayerRendererMixin {
+    @Inject(method = "renderRightHand", at = @At("TAIL"))
+    private void renderRightHand(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, ResourceLocation skinTexture, boolean isSleeveVisible, CallbackInfo ci) {
+        renderArmor(poseStack, bufferSource, packedLight, HumanoidArm.RIGHT, isSleeveVisible);
+    }
+
+    @Inject(method = "renderLeftHand", at = @At("TAIL"))
+    private void renderLeftHand(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, ResourceLocation skinTexture, boolean isSleeveVisible, CallbackInfo ci) {
+        renderArmor(poseStack, bufferSource, packedLight, HumanoidArm.LEFT, isSleeveVisible);
     }
 
     @Unique
-    private void renderArmor(PoseStack poseStack, MultiBufferSource vertexConsumers, LocalPlayer player, HumanoidArm arm, int light) {
-        ItemStack chestplate = ((InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.CHEST);
-        if (chestplate.isEmpty()) return;
+    private void renderArmor(PoseStack poseStack, MultiBufferSource buffer, int combinedLight, HumanoidArm humanoidArm, boolean isSleeveVisible) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        ItemStack armor = ((InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.CHEST);
+        if (armor.isEmpty()) return;
 
-        CustomArmorRenderer customRenderer = ArmorRendererRegistry.getRenderer(chestplate);
-        ModelPart armorArm = setupArmorModel(player, arm);
+        PlayerModel playerModel = (PlayerModel) ((LivingEntityRendererAccessor) this).getModel();
 
+        ModelPart armModel = humanoidArm == HumanoidArm.RIGHT ? playerModel.rightArm : playerModel.leftArm;
+        armModel.resetPose();
+        armModel.visible = true;
+        playerModel.leftSleeve.visible = isSleeveVisible;
+        playerModel.rightSleeve.visible = isSleeveVisible;
+        playerModel.leftArm.zRot = -0.1F;
+        playerModel.rightArm.zRot = 0.1F;
+
+        CustomArmorRenderer customRenderer = ArmorRendererRegistry.getRenderer(armor);
         if (customRenderer != null) {
-            customRenderer.render(poseStack, vertexConsumers, armorArm, light, chestplate, arm);
+            customRenderer.render(poseStack, buffer, combinedLight, armor, humanoidArm, (HumanoidModel<HumanoidRenderState>) ((LivingEntityRendererAccessor) this).getModel());
         } else {
-            Equippable equippable = chestplate.get(DataComponents.EQUIPPABLE);
+            Equippable equippable = armor.get(DataComponents.EQUIPPABLE);
             if (equippable != null && equippable.assetId().isPresent() && equippable.slot() == EquipmentSlot.CHEST) {
-                renderEquipment(poseStack, vertexConsumers, player, arm, light, chestplate);
+                renderEquipment(poseStack, buffer, player, humanoidArm, combinedLight, armor);
             }
         }
     }
