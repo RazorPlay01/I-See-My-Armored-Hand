@@ -29,7 +29,7 @@ public class ISMAHNeoForge {
             ArmorRendererRegistry.register(new AlchemistsArsenalCompat());
             ISMAH.LOGGER.info("Alchemist's Arsenal detected. Registering AlchemistsArsenalCompat.");
         }
-        if (isModLoaded("geckolib")) {
+        /*if (isModLoaded("geckolib")) {
             ArmorRendererRegistry.register(new GeckoLibCompat());
             ISMAH.LOGGER.info("GeckoLib detected. Registering AzureArmorLibCompat.");
         }
@@ -40,7 +40,7 @@ public class ISMAHNeoForge {
         if (isModLoaded("azurelib")) {
             ArmorRendererRegistry.register(new AzureLibCompat());
             ISMAH.LOGGER.info("AzureLib detected. Registering AzureArmorLibCompat.");
-        }
+        }*/
         if (isModLoaded("playeranimator")) {
             if (isModLoaded("geckolib")) {
                 NeoForge.EVENT_BUS.register(GeckoArmorRenderHandler.class);

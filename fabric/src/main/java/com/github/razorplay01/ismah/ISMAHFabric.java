@@ -25,7 +25,7 @@ public class ISMAHFabric implements ModInitializer, ClientModInitializer {
             ArmorRendererRegistry.register(new ArmorOfTheAgesCompat());
             ISMAH.LOGGER.info("Armor of the Ages detected. Registering ArmorOfTheAgesCompat.");
         }
-        if (isModLoaded("geckolib")) {
+        /*if (isModLoaded("geckolib")) {
             ArmorRendererRegistry.register(new GeckoLibCompat());
             ISMAH.LOGGER.info("GeckoLib detected. Registering AzureArmorLibCompat.");
         }
@@ -36,7 +36,7 @@ public class ISMAHFabric implements ModInitializer, ClientModInitializer {
         if (isModLoaded("azurelib")) {
             ArmorRendererRegistry.register(new AzureLibCompat());
             ISMAH.LOGGER.info("AzureLib detected. Registering AzureArmorLibCompat.");
-        }
+        }*/
         if (isModLoaded("playeranimator")) {
             if (isModLoaded("geckolib")) {
                 GeckoArmorRenderHandler.register();
