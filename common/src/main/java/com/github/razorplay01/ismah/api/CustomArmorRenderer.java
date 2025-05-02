@@ -1,10 +1,19 @@
 package com.github.razorplay01.ismah.api;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Interface for custom armor renderers in first-person view.
@@ -21,16 +30,14 @@ public interface CustomArmorRenderer {
      */
     boolean canRender(ItemStack stack);
 
-    /**
-     * Renders the armor on the player's arm in first-person view.
-     * Implementations have full control over the rendering process, including textures, colors, and effects.
-     *
-     * @param poseStack The transformation matrix stack for rendering.
-     * @param vertexConsumers The buffer source for rendering vertices.
-     * @param armorArm The ModelPart representing the arm where the armor is rendered (left or right).
-     * @param light The light level for rendering.
-     * @param stack The ItemStack of the equipped armor.
-     * @param arm The arm being rendered (either {@link HumanoidArm#LEFT} or {@link HumanoidArm#RIGHT}).
-     */
-    void render(PoseStack poseStack, MultiBufferSource vertexConsumers, ModelPart armorArm, int light, ItemStack stack, HumanoidArm arm);
+    void render(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull HumanoidRenderState> playerModel);
+
+    default void renderArmor(PoseStack poseStack, MultiBufferSource bufferSource, int light, ItemStack stack, HumanoidArm arm, HumanoidModel<@NotNull HumanoidRenderState> playerModel, HumanoidModel<@NotNull HumanoidRenderState> armorModel, ResourceLocation texture) {
+        ModelPart armorArm = arm == HumanoidArm.LEFT ? armorModel.leftArm : armorModel.rightArm;
+        ModelPart playerArm = arm == HumanoidArm.LEFT ? playerModel.leftArm : playerModel.rightArm;
+        armorArm.copyFrom(playerArm);
+
+        VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(bufferSource, RenderType.armorCutoutNoCull(texture), stack.hasFoil());
+        armorArm.render(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
+    }
 }
