@@ -13,6 +13,10 @@ public class ISMAHFabric implements ModInitializer, ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        /*if (isModLoaded("geckolib")) {
+            ArmorRendererRegistry.register(new GeckoLibCompat());
+            ISMAH.LOGGER.info("GeckoLib detected. Registering AzureArmorLibCompat.");
+        }*/
         ISMAH.init();
     }
 
