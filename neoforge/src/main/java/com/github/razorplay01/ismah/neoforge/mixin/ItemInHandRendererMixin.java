@@ -86,6 +86,10 @@ public class ItemInHandRendererMixin {
 
         for (ArmorMaterial.Layer layer : armorMaterial.layers()) {
             ResourceLocation texture = layer.texture(false);
+            if (!textureExists(texture)) {
+                continue;
+            }
+
             int layerColor = layer.dyeable() ? color : -1;
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderType.armorCutoutNoCull(texture));
             armorArm.render(matrices, vertexConsumer, light, OverlayTexture.NO_OVERLAY, layerColor);
@@ -119,5 +123,10 @@ public class ItemInHandRendererMixin {
             VertexConsumer glintConsumer = vertexConsumers.getBuffer(RenderType.armorEntityGlint());
             armorArm.render(matrices, glintConsumer, light, OverlayTexture.NO_OVERLAY);
         }
+    }
+
+    @Unique
+    private boolean textureExists(ResourceLocation texture) {
+        return MINECRAFT_CLIENT.getResourceManager().getResource(texture).isPresent();
     }
 }
