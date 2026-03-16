@@ -5,6 +5,7 @@
 [![Downloads Modrinth](https://img.shields.io/modrinth/dt/ismah?color=00AF5C&label=downloads&logo=modrinth)](https://modrinth.com/mod/ismah)
 
 [![I See My Armored Hand](https://modfolio.creeperkatze.de/modrinth/project/ismah)](https://modrinth.com/mod/ismah)
+[![I See My Armored Hand](https://modfolio.creeperkatze.de/curseforge/project/1174111)](https://www.curseforge.com/minecraft/mc-mods/i-see-my-armored-hand)
 
 **Have questions or want to make your mod compatible with ISMAH?** Check out our [Wiki](https://github.com/RazorPlay01/I-See-My-Armored-Hand/wiki) for detailed guides, especially the [API Documentation](https://github.com/RazorPlay01/I-See-My-Armored-Hand/wiki/API-Documentation) and [Compatibility Examples](https://github.com/RazorPlay01/I-See-My-Armored-Hand/tree/1.21.(1)_multiloader/neoforge/src/main/java/com/github/razorplay01/ismah/compat) for developers.
 
