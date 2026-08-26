@@ -1,0 +1,73 @@
+package dev.kikugie.stonecutter.util
+
+import org.gradle.api.Action
+import org.gradle.api.Project
+import org.gradle.api.file.RegularFile
+import org.gradle.api.file.SourceDirectorySet
+import org.gradle.api.invocation.Gradle
+import org.gradle.api.model.ObjectFactory
+import org.gradle.api.provider.Property
+import org.gradle.api.provider.ProviderFactory
+import org.gradle.api.tasks.SourceSet
+import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.internal.DefaultTaskExecutionRequest
+import org.gradle.kotlin.dsl.newInstance
+import org.gradle.kotlin.dsl.the
+import org.gradle.work.InputChanges
+import org.gradle.workers.WorkQueue
+import org.gradle.workers.WorkerExecutor
+import java.io.File
+
+internal val Project.sourceSets: SourceSetContainer
+    get() = project.the<SourceSetContainer>()
+
+internal inline fun <reified T : Any> ObjectFactory.newInstance(vararg parameters: Any, build: T.() -> Unit): T =
+    newInstance<T>(*parameters).apply(build)
+
+internal inline fun <reified T : Any> ObjectFactory.newInstance(build: Action<T>, vararg parameters: Any): T =
+    newInstance<T>(*parameters).apply(build::execute)
+
+internal fun SourceSet.allSources(): Sequence<SourceDirectorySet> = sequence {
+    yield(java)
+    yield(resources)
+    extensions.extensionsSchema.asSequence()
+        .mapNotNull { extensions.findByName(it.name) }
+        .filterIsInstance<SourceDirectorySet>()
+        .let { yieldAll(it) }
+}
+
+internal fun InputChanges.clearIfNotIncremental(vararg files: File) {
+    if (isIncremental) return
+    for (it in files) if (it.exists()) {
+        it.deleteRecursively()
+        it.mkdirs()
+    }
+}
+
+internal val isIdeaSync: Boolean get() = System.getProperty("idea.sync.active", "false").toBoolean()
+internal fun Gradle.requestTasks(tasks: Iterable<String>, path: String, dir: File): Unit = startParameter.run {
+    setTaskRequests(taskRequests + DefaultTaskExecutionRequest(tasks, path, dir))
+}
+
+internal val Project.projectDirectory: File get() = layout.projectDirectory.asFile
+internal val Project.buildDirectory: File get() = layout.buildDirectory.asFile.get()
+
+internal fun <T : Any> Property<T>.set(factory: ProviderFactory, provider: () -> T) {
+    set(factory.provider(provider))
+}
+
+internal inline fun WorkerExecutor.execute(action: (queue: WorkQueue) -> Unit): Unit =
+    noIsolation().apply(action).await()
+
+/**
+ * The dumbest way possible to construct a [RegularFile].
+ *
+ * Fuck you, Gradle.
+ */
+internal fun File.toRegularFile(objects: ObjectFactory): RegularFile =
+    objects.fileProperty().fileValue(this).get()
+
+internal inline fun <T : Any> Action<T>.doFirst(crossinline other: T.() -> Unit): Action<T> = Action {
+    other(this)
+    this@doFirst.execute(this)
+}

@@ -1,0 +1,86 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    env:
+      MOD_IS_RELEASE: true
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate tag matches version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION=$(grep '^mod\.version' stonecutter.properties.toml | cut -d'"' -f2)
+          CHANNEL_TAG=$(grep '^mod\.channel_tag' stonecutter.properties.toml | cut -d'"' -f2)
+          FULL_VERSION="${VERSION}${CHANNEL_TAG}"
+
+          echo "Validating tag '$TAG' against version '$FULL_VERSION'..."
+          if [[ "$TAG" != "$FULL_VERSION" ]]; then
+            echo "::error::Tag '$TAG' does not match version '$FULL_VERSION' in stonecutter.properties.toml."
+
+            if gh release view "$GITHUB_REF_NAME" &>/dev/null; then
+              echo "Deleting GitHub release for $GITHUB_REF_NAME..."
+              gh release delete "$GITHUB_REF_NAME" -y
+            fi
+
+            git push origin ":refs/tags/$GITHUB_REF_NAME"
+            exit 1
+          fi
+          echo "✓ Tag matches version."
+
+      - name: Prepare git-cliff
+        run: |
+          REPO_URL="https://github.com/${{ github.repository }}"
+          sed -i "s|%%%repo_url%%%|${REPO_URL}|g" cliff.toml
+
+      - name: Generate changelog with git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          args: --latest --strip header --output CHANGELOG.md
+          version: 'v2.13.1'
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 25
+          distribution: 'microsoft'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUB_GITHUB_ENABLE: ${{ vars.PUB_GITHUB_ENABLE }}
+          PUB_DRY_RUN: ${{ vars.PUB_DRY_RUN }}
+          PUB_MODS_ENABLE: ${{ vars.PUB_MODS_ENABLE }}
+          PUB_MAVEN_ENABLE: ${{ vars.PUB_MAVEN_ENABLE }}
+          PUB_MAVEN_CENTRAL_ENABLE: ${{ vars.PUB_MAVEN_CENTRAL_ENABLE }}
+          PUB_MAVEN_CENTRAL_SNAPSHOTS: ${{ vars.PUB_MAVEN_CENTRAL_SNAPSHOTS }}
+          PUB_MODRINTH_STAGING: ${{ vars.PUB_MODRINTH_STAGING }}
+          PUB_MODRINTH_PROJECT_ID: ${{ vars.PUB_MODRINTH_PROJECT_ID }}
+          PUB_CURSEFORGE_PROJECT_ID: ${{ vars.PUB_CURSEFORGE_PROJECT_ID }}
+          PUB_MODRINTH_TOKEN: ${{ secrets.PUB_MODRINTH_TOKEN }}
+          PUB_CURSEFORGE_TOKEN: ${{ secrets.PUB_CURSEFORGE_TOKEN }}
+          PUB_SIGNING_KEY: ${{ secrets.PUB_SIGNING_KEY }}
+          PUB_SIGNING_ID: ${{ secrets.PUB_SIGNING_ID }}
+          PUB_SIGNING_PASSWORD: ${{ secrets.PUB_SIGNING_PASSWORD }}
+          PUB_MAVEN_CENTRAL_USERNAME: ${{ secrets.PUB_MAVEN_CENTRAL_USERNAME }}
+          PUB_MAVEN_CENTRAL_PASSWORD: ${{ secrets.PUB_MAVEN_CENTRAL_PASSWORD }}
+        run: ./gradlew publishMods --no-daemon --stacktrace --console=plain
