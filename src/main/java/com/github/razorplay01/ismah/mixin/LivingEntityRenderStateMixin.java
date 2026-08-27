@@ -1,7 +1,7 @@
 package com.github.razorplay01.ismah.mixin;
 //? >= 1.21.2 {
 
-/*import com.github.razorplay01.ismah.util.accessor.LivingEntityRenderStateAccessor;
+import com.github.razorplay01.ismah.util.accessor.LivingEntityRenderStateAccessor;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,4 +22,4 @@ public abstract class LivingEntityRenderStateMixin implements LivingEntityRender
         return this.ismah$entity;
     }
 }
-*///?}
+//?}

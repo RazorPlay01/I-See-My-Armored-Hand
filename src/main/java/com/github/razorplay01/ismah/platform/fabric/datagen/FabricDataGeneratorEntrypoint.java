@@ -4,7 +4,7 @@ package com.github.razorplay01.ismah.platform.fabric.datagen;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 //? != 1.19.2 {
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 //?}
 
 public class FabricDataGeneratorEntrypoint implements DataGeneratorEntrypoint {

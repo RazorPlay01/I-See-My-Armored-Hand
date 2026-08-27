@@ -26,8 +26,8 @@ public abstract class SkinCustomizationScreenMixin extends OptionsSubScreen {
     @Inject(method = "addOptions", at = @At("RETURN"))
     private void addFirstPersonRenderOptions(CallbackInfo ci) {
 		//? >= 1.21.11 {
-        /*this.list.addHeader(Component.translatable("options.ismah.first_person_layers"));
-		*///?}
+        this.list.addHeader(Component.translatable("options.ismah.first_person_layers"));
+		//?}
         this.list.addSmall(
                 FirstPersonRenderConfig.createArmorOption(),
                 FirstPersonRenderConfig.createArrowsOption()

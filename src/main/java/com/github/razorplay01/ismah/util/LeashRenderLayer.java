@@ -13,19 +13,19 @@ import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 
 //? if >=1.21.2{
-/*import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-*///?}
-//? if <1.21.11{
-import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 //?}
+//? if <1.21.11{
+/*import net.minecraft.client.model.PlayerModel;
+*///?}
 //? if >=1.21.11{
-/*import net.minecraft.client.model.player.PlayerModel;
- *///?}
+import net.minecraft.client.model.player.PlayerModel;
+ //?}
 
 import static com.github.razorplay01.ismah.util.LeashRenderer.*;
 
 //? if <1.21.2{
-public class LeashRenderLayer<T extends net.minecraft.world.entity.LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
+/*public class LeashRenderLayer<T extends net.minecraft.world.entity.LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 	public LeashRenderLayer(RenderLayerParent<T, M> renderLayerParent) {
 		super(renderLayerParent);
 	}
@@ -45,16 +45,16 @@ public class LeashRenderLayer<T extends net.minecraft.world.entity.LivingEntity,
 		}
 	}
 }
-//?}
+*///?}
 
 //? if >=1.21.2{
-/*public class LeashRenderLayer<T extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends EntityModel<T>> extends RenderLayer<T, M> {
+public class LeashRenderLayer<T extends net.minecraft.client.renderer.entity.state.LivingEntityRenderState, M extends EntityModel<T>> extends RenderLayer<T, M> {
     public LeashRenderLayer(RenderLayerParent<T, M> renderLayerParent) {
         super(renderLayerParent);
     }
 
 	//? if < 1.21.9 {
-	@Override
+	/*@Override
 	public void render(PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, int light, T entityRenderState, float f, float g) {
 		if (!(((LivingEntityRenderStateAccessor) entityRenderState).ismah$getEntity() instanceof Player player)) return;
 		if (!(player instanceof net.minecraft.client.player.LocalPlayer localPlayer)) return;
@@ -68,10 +68,10 @@ public class LeashRenderLayer<T extends net.minecraft.world.entity.LivingEntity,
 			renderArmLeash(poseStack, multiBufferSource, light, arm, leash);
 		}
 	}
-	//?}
+	*///?}
 
 	//? if >= 1.21.9 {
-    /^@Override
+    @Override
     public void submit(PoseStack poseStack, net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int light, T entityRenderState, float f, float g) {
         if (((LivingEntityRenderStateAccessor) entityRenderState).ismah$getEntity() instanceof Player player && ((LeashStateAccessor) player).ismah$getLeashState()) {
             PlayerModel model = (PlayerModel) this.getParentModel();
@@ -87,6 +87,6 @@ public class LeashRenderLayer<T extends net.minecraft.world.entity.LivingEntity,
             renderArmLeash(poseStack, submitNodeCollector, light, arm, leash);
         }
     }
-	^///?}
+	//?}
 }
-*///?}
+//?}

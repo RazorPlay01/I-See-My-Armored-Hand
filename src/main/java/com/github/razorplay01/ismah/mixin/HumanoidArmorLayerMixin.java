@@ -19,20 +19,20 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=1.21.2{
-/*import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-*///?}
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+//?}
 //? if >=1.21.9{
-/*import net.minecraft.client.renderer.SubmitNodeCollector;
-*///?}
+import net.minecraft.client.renderer.SubmitNodeCollector;
+//?}
 
 @Mixin(HumanoidArmorLayer.class)
 //? < 1.21.2 {
-public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.entity.LivingEntity, M extends HumanoidModel<S>, A extends HumanoidModel<S>>
+/*public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.entity.LivingEntity, M extends HumanoidModel<S>, A extends HumanoidModel<S>>
 		extends RenderLayer<S, M> {
-//?} >= 1.21.2 {
-/*public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>>
+*///?} >= 1.21.2 {
+public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M extends HumanoidModel<S>, A extends HumanoidModel<S>>
         extends RenderLayer<S, M> {
-*///?}
+//?}
     protected HumanoidArmorLayerMixin(RenderLayerParent<S, M> renderLayerParent) {
         super(renderLayerParent);
     }
@@ -41,7 +41,7 @@ public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.enti
 	private FirstPersonArmRenderStateAccessor armRenderStateAccessor;
 
 	//? < 1.21.2 && fabric || forge {
-	@WrapWithCondition(
+	/*@WrapWithCondition(
 			method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
 			at = @At(
 					value = "INVOKE",
@@ -49,7 +49,7 @@ public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.enti
 			)
 	)
 	private boolean renderChest(HumanoidArmorLayer instance, PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, LivingEntity livingEntity, EquipmentSlot equipmentSlot, int i, HumanoidModel humanoidModel, @Local(ordinal = 0) S state) {
-		//?} < 1.21.2 && neoforge {
+		*///?} < 1.21.2 && neoforge {
 	/*@WrapWithCondition(
 			method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
 			at = @At(
@@ -68,7 +68,7 @@ public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.enti
 	)
 	private boolean renderChest(HumanoidArmorLayer instance, PoseStack poseStack, net.minecraft.client.renderer.MultiBufferSource multiBufferSource, ItemStack itemStack, EquipmentSlot equipmentSlot, int i, HumanoidModel humanoidModel, @Local(ordinal = 0) S state) {
 	*///?} >= 1.21.9 {
-	/*@WrapWithCondition(
+	@WrapWithCondition(
 			method = "submit(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;ILnet/minecraft/client/renderer/entity/state/HumanoidRenderState;FF)V",
 			at = @At(
 					value = "INVOKE",
@@ -76,14 +76,14 @@ public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.enti
 			)
 	)
 	private boolean renderChest(HumanoidArmorLayer instance, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, EquipmentSlot equipmentSlot, int i, HumanoidRenderState state) {
-	*///?}
+	//?}
 		if (!(state instanceof FirstPersonArmRenderStateAccessor accessor)) return false;
 		armRenderStateAccessor = accessor;
 		return accessor.ismah$getFirstPersonArm() == null || equipmentSlot == EquipmentSlot.CHEST;
 	}
 
 	//? < 1.21.9 {
-	@Inject(method = "setPartVisibility", at = @At("RETURN"))
+	/*@Inject(method = "setPartVisibility", at = @At("RETURN"))
 	private void onlyRenderArmInFirstPerson(HumanoidModel humanoidModel, EquipmentSlot equipmentSlot, CallbackInfo ci) {
 		HumanoidArm arm = armRenderStateAccessor.ismah$getFirstPersonArm();
 		if (arm == null) return;
@@ -96,5 +96,5 @@ public abstract class HumanoidArmorLayerMixin<S extends net.minecraft.world.enti
 			}
 		}
 	}
-	//?}
+	*///?}
 }

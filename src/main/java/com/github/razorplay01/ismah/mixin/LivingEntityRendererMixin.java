@@ -1,7 +1,7 @@
 package com.github.razorplay01.ismah.mixin;
 //? >= 1.21.2 {
 
-/*import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
+import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
 import com.github.razorplay01.ismah.util.accessor.LivingEntityRenderStateAccessor;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -36,4 +36,4 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
         ((com.github.razorplay01.ismah.util.accessor.RenderStateLivingEntityAccessor) entity).ismah$setRenderState(state);
     }
 }
-*///?}
+//?}

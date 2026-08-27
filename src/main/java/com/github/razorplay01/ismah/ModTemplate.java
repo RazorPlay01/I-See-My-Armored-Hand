@@ -2,7 +2,7 @@ package com.github.razorplay01.ismah;
 
 import com.github.razorplay01.ismah.platform.Platform;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -10,21 +10,21 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 //? <= 1.21.1 {
-import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
-//?}
-//? >= 1.21.2 {
-/*import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import com.github.razorplay01.ismah.util.accessor.RenderStateLivingEntityAccessor;
+/*import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
 *///?}
+//? >= 1.21.2 {
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import com.github.razorplay01.ismah.util.accessor.RenderStateLivingEntityAccessor;
+//?}
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity implements Attackable/*? <= 1.21.1 {*/, FirstPersonArmRenderStateAccessor/*?} */ /*? >= 1.21.2 {*//*, RenderStateLivingEntityAccessor*//*?} */ {
+public abstract class LivingEntityMixin extends Entity implements Attackable/*? <= 1.21.1 {*//*, FirstPersonArmRenderStateAccessor*//*?} */ /*? >= 1.21.2 {*/, RenderStateLivingEntityAccessor/*?} */ {
 	protected LivingEntityMixin(EntityType<?> type, Level level) {
 		super(type, level);
 	}
 
 	//? <= 1.21.1 {
-	@Unique
+	/*@Unique
 	private HumanoidArm ismah$firstPersonArm;
 	@Unique
 	private PartPose ismah$firstPersonArmPose;
@@ -48,10 +48,10 @@ public abstract class LivingEntityMixin extends Entity implements Attackable/*? 
 	public void ismah$setFirstPersonArmPose(PartPose pose) {
 		this.ismah$firstPersonArmPose = pose;
 	}
-	//?}
+	*///?}
 
 	//? >= 1.21.2 {
-    /*@Unique
+    @Unique
     private EntityRenderState ismah$renderState;
 
     @Override
@@ -63,5 +63,5 @@ public abstract class LivingEntityMixin extends Entity implements Attackable/*? 
     public void ismah$setRenderState(EntityRenderState renderState) {
         this.ismah$renderState = renderState;
     }
-	*///?}
+	//?}
 }

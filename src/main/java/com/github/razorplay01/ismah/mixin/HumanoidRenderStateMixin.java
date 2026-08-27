@@ -1,7 +1,7 @@
 package com.github.razorplay01.ismah.mixin;
 //? >= 1.21.2 {
 
-/*import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
+import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.HumanoidArm;
@@ -36,4 +36,4 @@ public abstract class HumanoidRenderStateMixin implements FirstPersonArmRenderSt
         this.ismah$firstPersonArmPose = pose;
     }
 }
-*///?}
+//?}
