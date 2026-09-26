@@ -2,6 +2,7 @@ package com.github.razorplay01.ismah.mixin;
 
 import com.github.razorplay01.ismah.config.FirstPersonRenderConfig;
 import com.github.razorplay01.ismah.mixin.accesor.LivingEntityRendererAccesor;
+import com.github.razorplay01.ismah.util.FirstPersonArmorRenderer;
 import com.github.razorplay01.ismah.util.LeashRenderLayer;
 import com.github.razorplay01.ismah.util.accessor.FirstPersonArmRenderStateAccessor;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -185,11 +186,11 @@ public abstract class PlayerRendererMixin
             firstPersonState.ismah$setFirstPersonArmPose(modelPart.storePose());
 
 			//? < 1.21.2 {
-			/*this.armorLayer.render(poseStack, (net.minecraft.client.renderer.MultiBufferSource) instance, light, (AbstractClientPlayer) tempState, 0f, 0f, 0f, 0f, 0f, 0f);
+			/*FirstPersonArmorRenderer.renderChestArm(this.armorLayer, poseStack, (net.minecraft.client.renderer.MultiBufferSource) instance, light, (AbstractClientPlayer) tempState);
 			 *///?} >= 1.21.2 && < 1.21.9 {
-			/*this.armorLayer.render(poseStack, (net.minecraft.client.renderer.MultiBufferSource) instance, light, (PlayerRenderState) tempState, 0f, 0f);
+			/*FirstPersonArmorRenderer.renderChestArm(this.armorLayer, poseStack, (net.minecraft.client.renderer.MultiBufferSource) instance, light, tempState);
 			*///?} >= 1.21.11 {
-			this.armorLayer.submit(poseStack, (SubmitNodeCollector) instance, light, (AvatarRenderState) tempState, 0f, 0f);
+			FirstPersonArmorRenderer.renderChestArm(this.armorLayer, poseStack, (SubmitNodeCollector) instance, light, tempState);
 			 //?}
         }
 

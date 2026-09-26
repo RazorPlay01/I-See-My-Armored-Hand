@@ -34,6 +34,7 @@ mixins {
 		always(
 			"accesor.LivingEntityRendererAccesor",
 			"accesor.PlayerModelAccesor",
+			"accesor.HumanoidArmorLayerAccessor",
 			"HumanoidArmorLayerMixin",
 			"HumanoidModelMixin",
 			"LeashAttachMixin",

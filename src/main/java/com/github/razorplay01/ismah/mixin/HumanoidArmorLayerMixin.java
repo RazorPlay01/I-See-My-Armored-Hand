@@ -7,16 +7,12 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //? if >=1.21.2{
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
@@ -37,9 +33,10 @@ public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M e
         super(renderLayerParent);
     }
 
-	@Unique
-	private FirstPersonArmRenderStateAccessor armRenderStateAccessor;
-
+	// Solo se permite renderizar la pieza del pecho cuando la capa recibe un estado
+	// marcado como "brazo en primera persona". Se comprueba de forma defensiva para
+	// que otras capas de terceros que llamen a renderArmorPiece no puedan pintar el
+	// peto completo sobre el brazo.
 	//? < 1.21.2 && fabric || forge {
 	/*@WrapWithCondition(
 			method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/LivingEntity;FFFFFF)V",
@@ -77,24 +74,10 @@ public abstract class HumanoidArmorLayerMixin<S extends HumanoidRenderState, M e
 	)
 	private boolean renderChest(HumanoidArmorLayer instance, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, ItemStack itemStack, EquipmentSlot equipmentSlot, int i, HumanoidRenderState state) {
 	//?}
-		if (!(state instanceof FirstPersonArmRenderStateAccessor accessor)) return false;
-		armRenderStateAccessor = accessor;
+		// Estados que no soportan el flag de primera persona se renderizan con normalidad.
+		if (!(state instanceof FirstPersonArmRenderStateAccessor accessor)) {
+			return true;
+		}
 		return accessor.ismah$getFirstPersonArm() == null || equipmentSlot == EquipmentSlot.CHEST;
 	}
-
-	//? < 1.21.9 {
-	/*@Inject(method = "setPartVisibility", at = @At("RETURN"))
-	private void onlyRenderArmInFirstPerson(HumanoidModel humanoidModel, EquipmentSlot equipmentSlot, CallbackInfo ci) {
-		HumanoidArm arm = armRenderStateAccessor.ismah$getFirstPersonArm();
-		if (arm == null) return;
-		humanoidModel.setAllVisible(false);
-		if (equipmentSlot == EquipmentSlot.CHEST) {
-			if (arm == HumanoidArm.RIGHT) {
-				humanoidModel.rightArm.visible = true;
-			} else {
-				humanoidModel.leftArm.visible = true;
-			}
-		}
-	}
-	*///?}
 }
