@@ -306,7 +306,7 @@ public final class FirstPersonArmorRenderer {
 
         String materialName = armorItem.getMaterial().getName();
         String namespace = itemNamespace(chest);
-        ResourceLocation preferred = armorLayer.getArmorResource(player, chest, EquipmentSlot.CHEST, null);
+        Identifier preferred = armorLayer.getArmorResource(player, chest, EquipmentSlot.CHEST, null);
         List<Identifier> baseCandidates = chestTextureCandidates(preferred, namespace, materialName, false);
 
         float red = 1.0F;
@@ -321,7 +321,7 @@ public final class FirstPersonArmorRenderer {
         }
         boolean rendered = renderAllExisting(model, poseStack, buffers, light, baseCandidates, red, green, blue);
         if (rendered && dyeable) {
-            ResourceLocation preferredOverlay = armorLayer.getArmorResource(player, chest, EquipmentSlot.CHEST, "overlay");
+            Identifier preferredOverlay = armorLayer.getArmorResource(player, chest, EquipmentSlot.CHEST, "overlay");
             List<Identifier> overlayCandidates = chestTextureCandidates(preferredOverlay, namespace, materialName, true);
             renderAllExisting(model, poseStack, buffers, light, overlayCandidates, 1.0F, 1.0F, 1.0F);
         }

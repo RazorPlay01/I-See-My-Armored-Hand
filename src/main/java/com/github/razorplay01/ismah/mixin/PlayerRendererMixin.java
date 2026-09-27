@@ -105,10 +105,21 @@ public abstract class PlayerRendererMixin
 	/*@WrapOperation(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V"))
 	private void renderFirstPersonLayers(SubmitNodeCollector instance, ModelPart modelPart, PoseStack poseStack, RenderType renderType, int light, int overlay, TextureAtlasSprite textureAtlasSprite, Operation<Void> original) {
 	 */
-		//?} >= 1.21.11 {
+		//?} >= 1.21.11 && <= 26.2{
 	@WrapOperation(method = "renderHand", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/TextureAtlasSprite;)V"))
 	private void renderFirstPersonLayers(SubmitNodeCollector instance, ModelPart modelPart, PoseStack poseStack, RenderType renderType, int light, int overlay, TextureAtlasSprite textureAtlasSprite, Operation<Void> original) {
-	//?}
+	//?} >= 26.3 {
+	/*@WrapOperation(
+			method = "renderHand",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModelPart(Lnet/minecraft/client/model/geom/ModelPart;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IILnet/minecraft/client/renderer/texture/UvMapping;)V"
+			)
+	)
+	private void renderFirstPersonLayers(
+			SubmitNodeCollector instance, ModelPart modelPart, PoseStack poseStack, RenderType renderType, int light, int overlay, net.minecraft.client.renderer.texture.UvMapping textureAtlasSprite, Operation<Void> original
+	) {
+			*///?}
         if (modelPart != this.model.leftArm && modelPart != this.model.rightArm) {
             //? < 1.21.9 {
 			/*original.call(modelPart, poseStack, vertexConsumer, light, overlay);

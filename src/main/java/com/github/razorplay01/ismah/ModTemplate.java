@@ -18,7 +18,7 @@ import com.github.razorplay01.ismah.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "ismah";
-	public static final String MOD_VERSION = /*$ mod_version*/ "6.0.0";
+	public static final String MOD_VERSION = /*$ mod_version*/ "6.1.1";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "I See My Armored Hand";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

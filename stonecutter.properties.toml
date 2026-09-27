@@ -4,7 +4,7 @@ loomx.loom_version="1.16-SNAPSHOT"
 mod.id = "ismah"
 mod.name = "I See My Armored Hand"
 mod.group = "com.github.razorplay01"
-mod.version = "6.1.0"
+mod.version = "6.1.1"
 mod.channel_tag = ""
 mod.description = "Tired of not seeing your equipped armor in first person? \n'I See My Armored Hand' adds a visual of your arm armor when looking down, providing increased immersion and a better sense of your character's protection."
 mod.authors = ["RazorPlay01"]
@@ -75,8 +75,12 @@ deps.etf = "HLCBKYFD"
 deps.minecraft = "26.3"
 deps.fabric-api = "0.161.0+26.3"
 deps.modmenu = "21.0.0-beta.1"
-deps.emf = "xQeW3qQB"
-deps.etf = "HLCBKYFD"
+# EMF 3.3.8-fabric-26.3 / ETF 7.2.4-fabric-26.3 (builds for 26.3).
+# The 26.2 builds (xQeW3qQB / HLCBKYFD) crash on 26.3 because EMF's
+# @Inject on AvatarRenderer#renderHand targets
+# submitModelPart(...TextureAtlasSprite;)V, which 26.3 replaced with UvMapping.
+deps.emf = "kdDVwkgV"
+deps.etf = "Hs3N31ud"
 
 [forge]
 
